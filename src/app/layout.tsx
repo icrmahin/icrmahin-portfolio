@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Mono, Instrument_Serif, Manrope } from "next/font/google";
+import { Bebas_Neue, Caveat, DM_Mono, Instrument_Serif, Manrope } from "next/font/google";
 import type { ReactNode } from "react";
 import { LenisProvider } from "@/components/lenis-provider";
 import { ScrollEffects } from "@/components/scroll-effects";
@@ -28,12 +28,26 @@ const mono = DM_Mono({
   display: "swap",
 });
 
+const display = Bebas_Neue({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: "400",
+  display: "swap",
+});
+
+const handwriting = Caveat({
+  subsets: ["latin"],
+  variable: "--font-hand",
+  weight: "400",
+  display: "swap",
+});
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
 
 export const metadata: Metadata = {
   title: {
-    default: `${site.name} — ${site.role}`,
-    template: `%s — ${site.name}`,
+    default: site.name + " — " + site.role,
+    template: "%s — " + site.name,
   },
   description: site.description,
   applicationName: "icrmahin Portfolio",
@@ -41,31 +55,50 @@ export const metadata: Metadata = {
   creator: site.name,
   robots: { index: true, follow: true },
   icons: { icon: "/icons/icon.svg" },
-  ...(siteUrl ? {
-    metadataBase: new URL(siteUrl),
-    openGraph: {
-      type: "website",
-      title: `${site.name} — ${site.role}`,
-      description: site.description,
-      images: [{ url: "/images/autumn-cover.webp", width: 1648, height: 927, alt: "Pixel-art sunset landscape created for icrmahin" }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${site.name} — ${site.role}`,
-      description: site.description,
-      images: ["/images/autumn-cover.webp"],
-    },
-  } : {}),
+  ...(siteUrl
+    ? {
+        metadataBase: new URL(siteUrl),
+        openGraph: {
+          type: "website",
+          title: site.name + " — " + site.role,
+          description: site.description,
+          images: [
+            {
+              url: "/images/autumn-cover.webp",
+              width: 1648,
+              height: 927,
+              alt: "Pixel-art autumn landscape created for icrmahin",
+            },
+          ],
+        },
+        twitter: {
+          card: "summary_large_image",
+          title: site.name + " — " + site.role,
+          description: site.description,
+          images: ["/images/autumn-cover.webp"],
+        },
+      }
+    : {}),
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f3f0e8",
+  themeColor: "#f7f5ef",
   colorScheme: "light",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: ReactNode }>) {
+  const fontVariables = [
+    sans.variable,
+    serif.variable,
+    mono.variable,
+    display.variable,
+    handwriting.variable,
+  ].join(" ");
+
   return (
-    <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
+    <html lang="en" className={fontVariables}>
       <body>
         <a className="skip-link" href="#main-content">Skip to content</a>
         <LenisProvider>

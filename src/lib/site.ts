@@ -1,17 +1,18 @@
 export const site = {
   name: "A. Mahin",
+  shortName: "Mahin",
   role: "Independent Product Builder",
   email: "icrmahin@gmail.com",
-  location: "Bangladesh · Independent practice",
+  location: "Dhaka, Bangladesh",
   github: "https://github.com/icrmahin",
   x: "https://x.com/icrmahin",
   description:
-    "I turn complex ideas into thoughtful digital products through product thinking, interface design, and software engineering.",
+    "I design and build digital products, moving from product thinking and interface design to working software.",
 } as const;
 
 export const navigation = [
-  { label: "Work", href: "/#work" },
-  { label: "Approach", href: "/#approach" },
+  { label: "Home", href: "/#top" },
   { label: "About", href: "/#about" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Case study", href: "/#work" },
+  { label: "Playground", href: "/#playground" },
 ] as const;
