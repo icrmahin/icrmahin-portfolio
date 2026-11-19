@@ -2,34 +2,36 @@
 
 A personal portfolio for **A. Mahin** — an independent product builder working across product thinking, interface design, and software engineering.
 
-The visual direction is a playful editorial portfolio built around a warm paper canvas, ruled notebook texture, condensed display typography, small utility navigation, handwritten annotations, taped-photo details, and a restrained set of bright paper accents. It borrows the tactile energy of a personal scrapbook without turning the site into a game or sacrificing readable project storytelling.
+The visual system combines ruled notebook paper, compact utility navigation, expressive display type, handwritten notes, taped photography, and restrained pastel accents. It is an editorial portfolio, not a developer-terminal gimmick or a game.
 
 ## Stack
 
 | Concern | Technology |
 | --- | --- |
-| Framework | Next.js 16.4.6 App Router |
-| UI | React 19.3 + TypeScript 5.9 |
-| Styling | Tailwind CSS 4.3 + custom CSS |
-| Scroll choreography | GSAP 3.15 + ScrollTrigger |
-| Interface motion | Motion 14.14 |
-| Smooth scrolling | Lenis 1.3 |
+| Framework | Next.js 16 App Router |
+| UI | React 19 + TypeScript 5 |
+| Styling | Tailwind CSS 4 + custom CSS |
+| Scroll choreography | GSAP 3 + ScrollTrigger |
+| Interface motion | Motion |
+| Smooth scrolling | Lenis |
 | Typography | Manrope, Instrument Serif, DM Mono, Bebas Neue, Caveat |
-| Images | Next.js Image + locally bundled WebP / PNG assets |
-| Deployment target | Vercel or another Node-compatible Next.js host |
+| Images | Next.js Image + local WebP / PNG assets |
+| Package manager | pnpm 12 |
+| Hosting | Vercel |
 
-Direct dependency versions are pinned in `package.json`. Keep the motion stack coordinated; do not add more animation libraries for the same job.
+GSAP owns page choreography and scroll-linked effects. Motion owns compact interface state and the reading-progress indicator. Lenis owns wheel-scroll interpolation. Anime.js is intentionally not included because it would duplicate responsibilities already covered by this stack.
 
 ## Requirements
 
 - Node.js 22 or newer
-- npm 10 or newer
+- pnpm 12.22.0 (Corepack can activate the version declared in `package.json`)
 
 ## Getting started
 
 ```bash
-npm install
-npm run dev
+corepack enable
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
 Open `http://localhost:3000`.
@@ -37,16 +39,19 @@ Open `http://localhost:3000`.
 ## Quality checks
 
 ```bash
-npm run lint
-npm run typecheck
-npm run build
+pnpm lint
+pnpm typecheck
+pnpm build
+pnpm smoke
 ```
 
-Or run the full sequence:
+Run the complete sequence:
 
 ```bash
-npm run check
+pnpm check
 ```
+
+The smoke test starts the production server and verifies the homepage, About page, published case study, unpublished project 404, crawler endpoints, and icon asset.
 
 ## Project structure
 
@@ -54,24 +59,23 @@ npm run check
 src/
 ├── app/
 │   ├── about/                 # About page
-│   ├── work/[slug]/           # Static project case studies
-│   ├── globals.css            # Tokens, notebook paper, components, responsive rules
-│   ├── layout.tsx             # Global layout, metadata, local font loading
+│   ├── work/[slug]/           # Published case studies
+│   ├── globals.css            # Design system and responsive rules
+│   ├── layout.tsx             # Fonts, metadata, structured data, providers
 │   ├── page.tsx               # Homepage composition
 │   ├── robots.ts              # Crawler rules
-│   └── sitemap.ts             # Generated sitemap
+│   └── sitemap.ts             # Published routes only
 ├── components/
 │   ├── lenis-provider.tsx     # Lenis + GSAP ticker integration
-│   ├── project-card.tsx       # Selected-work card
-│   ├── project-visual.tsx     # Project-specific editorial artwork
-│   ├── scroll-effects.tsx     # Accessible GSAP reveal choreography
-│   ├── section-heading.tsx
+│   ├── project-card.tsx       # Published and in-progress project cards
+│   ├── project-visual.tsx     # Editorial project artwork
+│   ├── scroll-effects.tsx     # GSAP intro and ScrollTrigger choreography
 │   ├── site-footer.tsx
-│   └── site-header.tsx        # Responsive navigation
+│   └── site-header.tsx        # Responsive nav and scroll progress
 ├── content/
 │   └── projects.ts            # Typed project and case-study content
 └── lib/
-    └── site.ts                # Identity, email, social URLs
+    └── site.ts                # Identity, canonical URL and nav data
 
 public/
 ├── icons/icon.svg
@@ -81,44 +85,53 @@ public/
     ├── mahin-portrait.webp
     └── pixel-portrait.webp
 
-docs/
-└── CONTENT.md                 # Publishing and content rules
+scripts/
+└── smoke-test.mjs
 ```
 
 ## Content editing
 
 ### Site identity
 
-Update `src/lib/site.ts` to change the public role, email, location label, and social URLs.
+Update `src/lib/site.ts` to change the role, email, location label, and social URLs.
 
 ### Projects
 
-Edit `src/content/projects.ts`. The `slug` controls the `/work/[slug]` URL. The case-study routes are generated statically from this data.
+Edit `src/content/projects.ts`. The `slug` controls the `/work/[slug]` URL.
 
-Keep project statements verifiable. Do not add user counts, revenue, performance claims, testimonials, or client outcomes unless they are supported and approved for publication.
+- Set `published: true` only when the case study is ready for public viewing.
+- Unpublished projects remain visible as in-progress cards, but do not receive a case-study route or sitemap entry.
+- Do not add unverified client outcomes, revenue, user counts, testimonials, or performance metrics.
 
 ### Project imagery
 
-- The profile portrait and pixel-art illustrations are the owner's previously generated portfolio assets.
-- The Hibbullah mark is copied from the Hibbullah application's own `assets/images/logo/hibbullah-main.png`.
-- The Hibbullah and DigitalPathways project-card compositions are editorial artwork, not screenshots of shipped software.
+- The profile portrait and pixel-art illustrations are previously generated portfolio assets.
+- The Hibbullah mark comes from the Hibbullah application repository.
+- Project cover compositions are editorial artwork, not screenshots of shipped software.
 
-Replace the illustrative artwork with actual product screenshots as they become available. Do not present invented interface mockups as real shipped screens.
+Use actual product captures when they are approved and available. Never present illustrative artwork as a live product screen.
 
 ## Motion and accessibility
 
-- GSAP + ScrollTrigger handle section reveals and the hero image entrance.
-- Motion handles the responsive navigation panel.
-- Lenis provides restrained wheel-scroll interpolation and is synchronized with the GSAP ticker.
-- Reduced-motion preferences disable Lenis and entrance choreography.
-- Motion is progressive enhancement; core content remains readable without it.
-- Use native links and buttons, descriptive image alt text, visible focus styles, and semantic section headings.
+- GSAP handles the opening sequence, section reveals, project-card choreography, and restrained desktop parallax.
+- Motion handles navigation state and the reading-progress indicator.
+- Lenis provides restrained wheel-scroll interpolation, synchronized to the GSAP ticker.
+- All motion choreography respects `prefers-reduced-motion`; reduced-motion users get native scrolling and static content.
+- Core content remains readable without JavaScript.
+- Navigation supports keyboard dismissal with Escape, visible focus states, and semantic landmarks.
 
-Keep motion subordinate to content. Test keyboard navigation and `prefers-reduced-motion` after changes.
+Avoid adding another animation engine for overlapping responsibilities. Motion should support the content rather than compete with it.
 
-## Environment
+## Environment and canonical URLs
 
-Set the production URL in `.env.local` for canonical sitemap and social metadata generation:
+The site resolves its canonical base URL in this order:
+
+1. `NEXT_PUBLIC_SITE_URL` (recommended for a custom domain)
+2. `VERCEL_PROJECT_PRODUCTION_URL` (Vercel's production domain)
+3. `VERCEL_URL` (deployment URL, primarily for previews)
+4. `http://localhost:3000` (local development)
+
+For a custom domain, set this Vercel environment variable for Production and Preview:
 
 ```bash
 NEXT_PUBLIC_SITE_URL=https://your-domain.example
@@ -129,19 +142,23 @@ No database or private environment variables are required.
 ## Deployment
 
 1. Push the repository to GitHub.
-2. Import it into Vercel.
-3. Set `NEXT_PUBLIC_SITE_URL` to the production domain.
-4. Deploy using the default Next.js preset.
-5. Verify `/`, `/about`, `/work/hibbullah`, `/work/digitalpathways`, `/robots.txt`, and `/sitemap.xml`.
+2. Import it into Vercel with the repository root as the project root.
+3. Confirm the framework preset is Next.js and the build command is `pnpm build`.
+4. Set `NEXT_PUBLIC_SITE_URL` to the production domain if using a custom domain.
+5. Deploy.
+6. Verify `/`, `/about`, `/work/hibbullah`, `/robots.txt`, and `/sitemap.xml`.
+
+The GitHub Actions workflow runs install, lint, type-check, production build, and route smoke tests for every push to `main` and every pull request.
 
 ## Engineering conventions
 
 - Keep Server Components as the default.
 - Use Client Components only for browser APIs and interactions.
 - Keep content separate from presentation.
-- Keep imagery local, optimized, and accurately labeled.
-- Avoid speculative backend services and unnecessary dependencies.
-- Run lint, typecheck, and production build before merging.
+- Keep images local, optimized, and accurately labeled.
+- Respect reduced-motion preferences.
+- Keep package versions exact and the pnpm lockfile committed.
+- Run `pnpm check` before merging.
 
 ## License
 

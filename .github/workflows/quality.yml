@@ -11,20 +11,35 @@ concurrency:
 
 jobs:
   verify:
-    name: Lint, types, and production build
+    name: Lint, types, build, and route smoke tests
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.22.0
+          run_install: false
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: pnpm
+
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
+
       - name: Run ESLint
-        run: npm run lint
+        run: pnpm lint
+
       - name: Check TypeScript
-        run: npm run typecheck
+        run: pnpm typecheck
+
       - name: Build production application
-        run: npm run build
+        run: pnpm build
+
+      - name: Smoke-test production routes
+        run: pnpm smoke
