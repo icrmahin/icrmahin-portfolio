@@ -2259,3 +2259,84 @@ img {
     transform: none !important;
   }
 }
+
+/* Project artwork: keep this typographic until real product screens are ready. */
+.hibbullah-mark {
+  position: relative;
+  display: block;
+  width: clamp(72px, 9vw, 112px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper-white);
+}
+
+.hibbullah-mark img {
+  object-fit: contain;
+  padding: 7px;
+}
+
+.pathway-composition {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 255px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.pathway-composition > strong {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  color: #25243a;
+  font-family: var(--display);
+  font-size: clamp(50px, 7.2vw, 88px);
+  font-weight: 400;
+  letter-spacing: 0.015em;
+  line-height: 0.8;
+  transform: rotate(-4deg);
+}
+
+.pathway-composition > strong span {
+  color: #5b5685;
+}
+
+.pathway-composition > small {
+  position: relative;
+  z-index: 1;
+  margin-top: 12px;
+  color: rgba(42, 39, 70, 0.65);
+  font-family: var(--mono);
+  font-size: 7px;
+  letter-spacing: 0.14em;
+}
+
+.pathway-index {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 35px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgba(42, 39, 70, 0.3);
+  border-radius: 50%;
+  color: #514b7b;
+  font-family: var(--mono);
+  font-size: 9px;
+}
+
+@media (max-width: 680px) {
+  .pathway-composition {
+    min-height: 245px;
+  }
+
+  .pathway-composition > strong {
+    font-size: clamp(48px, 13vw, 70px);
+  }
+}

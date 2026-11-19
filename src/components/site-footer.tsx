@@ -1,3 +1,6 @@
+"use client";
+
+import Link from "next/link";
 import { site } from "@/lib/site";
 
 export function SiteFooter() {
@@ -11,7 +14,7 @@ export function SiteFooter() {
           <a href={site.x} rel="noreferrer" target="_blank">X ↗</a>
           <a href={"mailto:" + site.email}>Email ↗</a>
         </nav>
-        <a className="back-to-top" href="#top">Back to top ↑</a>
+        <Link className="back-to-top" href="/#top">Back to top ↑</Link>
       </div>
     </footer>
   );
@@ -19,8 +22,8 @@ export function SiteFooter() {
 
 function LinkMark() {
   return (
-    <a aria-label="Back to home" className="footer-wordmark" href="/">
+    <Link aria-label="Back to home" className="footer-wordmark" href="/">
       icrmahin<span>.</span>
-    </a>
+    </Link>
   );
 }
