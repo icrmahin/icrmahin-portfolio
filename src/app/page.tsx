@@ -35,33 +35,33 @@ export default function HomePage() {
   return (
     <>
       <section className="hero shell" id="top">
-        <div className="hero-meta" data-reveal>
+        <div className="hero-meta" data-hero-intro="meta">
           <span className="eyebrow-pill">INDEPENDENT PRODUCT BUILDER</span>
           <span className="hero-location">{site.location.toUpperCase()}</span>
         </div>
 
-        <div className="hero-stage hero-stage-editorial">
+        <div className="hero-stage">
           <div className="hero-center">
-            <p className="hero-kicker" data-reveal>
+            <p className="hero-kicker" data-hero-intro="kicker">
               PRODUCT THINKING <span>/</span> DESIGN <span>/</span> ENGINEERING
             </p>
 
-            <h1 aria-label="Mahin" data-reveal>
+            <h1 aria-label="Mahin" data-hero-intro="title">
               <span className="hero-name-frame">
                 <span className="hero-name">MAHIN</span>
               </span>
             </h1>
 
-            <p className="hero-tagline" data-reveal>
+            <p className="hero-tagline" data-hero-intro="tagline">
               Ideas into <em>working products.</em>
             </p>
-            <p className="hero-summary" data-reveal>
+            <p className="hero-summary" data-hero-intro="summary">
               I move between product thinking, interface design, and software
               engineering to take an idea from the first decision to a working
               release.
             </p>
 
-            <div className="hero-actions" data-reveal>
+            <div className="hero-actions" data-hero-intro="actions">
               <a className="button button-primary" href="#work">
                 Selected work <span aria-hidden="true">↘</span>
               </a>
@@ -71,7 +71,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="hero-portrait-wrap" data-reveal>
+          <div className="hero-portrait-wrap" data-hero-intro="portrait">
             <span className="photo-tape" aria-hidden="true" />
             <div className="portrait-frame">
               <Image
@@ -79,7 +79,7 @@ export default function HomePage() {
                 className="hero-portrait"
                 height={864}
                 preload
-                sizes="(max-width: 680px) 112px, 158px"
+                sizes="(max-width: 680px) 102px, 148px"
                 src="/images/mahin-portrait.webp"
                 width={720}
               />
@@ -87,7 +87,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <p className="hand-note hero-note-right" data-reveal>
+          <p className="hand-note hero-note-right" data-hero-intro="note">
             design with intent.
           </p>
         </div>
@@ -116,14 +116,14 @@ export default function HomePage() {
         </header>
 
         <div className="playground-board playground-board-editorial">
-          <div className="playground-image" data-hero-art>
+          <div className="playground-image">
             <Image
               alt="Pixel-art autumn landscape made for the icrmahin portfolio"
               className="playground-pixel"
               fill
-              priority
               sizes="(max-width: 760px) 100vw, 680px"
               src="/images/autumn-cover.webp"
+              data-parallax-image
             />
             <span className="playground-image-tag">
               PERSONAL VISUAL / 001
@@ -152,7 +152,7 @@ export default function HomePage() {
             <Image
               alt="Pixel-art portrait against a warm sunset landscape"
               height={900}
-              sizes="(max-width: 760px) 112px, 150px"
+              sizes="(max-width: 760px) 90px, 140px"
               src="/images/pixel-portrait.webp"
               width={900}
             />
@@ -162,7 +162,7 @@ export default function HomePage() {
 
       <section className="about-section section shell" id="about">
         <div className="about-image-wrap" data-reveal>
-          <span className="about-tape about-tape-one" aria-hidden="true" />
+          <span className="about-tape" aria-hidden="true" />
           <Image
             alt="Pixel-art portrait of Mahin against an autumn sky"
             className="about-pixel-art"

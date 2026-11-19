@@ -1,23 +1,30 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/content/projects";
+import { getSiteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
-  if (!siteUrl) return [];
+  const siteUrl = getSiteUrl();
 
-  const routes = ["", "/about"].map((route) => ({
-    url: `${siteUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: route === "" ? 1 : 0.7,
-  }));
+  const routes = [
+    {
+      url: siteUrl + "/",
+      changeFrequency: "monthly" as const,
+      priority: 1,
+    },
+    {
+      url: siteUrl + "/about",
+      changeFrequency: "yearly" as const,
+      priority: 0.6,
+    },
+  ];
 
-  const workRoutes = projects.map((project) => ({
-    url: `${siteUrl}/work/${project.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+  const workRoutes = projects
+    .filter((project) => project.published)
+    .map((project) => ({
+      url: siteUrl + "/work/" + project.slug,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }));
 
   return [...routes, ...workRoutes];
 }

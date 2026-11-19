@@ -10,9 +10,28 @@ export const site = {
     "I design and build digital products, moving from product thinking and interface design to working software.",
 } as const;
 
+export function getSiteUrl(): string {
+  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  const productionDomain = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+  const deploymentDomain = process.env.VERCEL_URL?.trim();
+
+  if (configuredUrl) {
+    try {
+      return new URL(configuredUrl).origin;
+    } catch {
+      // Fall through to Vercel's deployment-provided domains.
+    }
+  }
+
+  if (productionDomain) return "https://" + productionDomain;
+  if (deploymentDomain) return "https://" + deploymentDomain;
+
+  return "http://localhost:3000";
+}
+
 export const navigation = [
-  { label: "Home", href: "/#top" },
-  { label: "About", href: "/#about" },
-  { label: "Case study", href: "/#work" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Work", href: "/#work" },
   { label: "Playground", href: "/#playground" },
 ] as const;

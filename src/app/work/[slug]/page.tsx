@@ -3,9 +3,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProjectVisual } from "@/components/project-visual";
 import { getProject, projects } from "@/content/projects";
+import { getSiteUrl, site } from "@/lib/site";
 
 export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  return projects
+    .filter((project) => project.published)
+    .map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({
@@ -16,13 +19,22 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getProject(slug);
 
-  if (!project) {
+  if (!project || !project.published) {
     return { title: "Project not found" };
   }
 
   return {
     title: project.title + " — Selected work",
     description: project.summary,
+    alternates: {
+      canonical: "/work/" + project.slug,
+    },
+    openGraph: {
+      title: project.title + " — " + site.name,
+      description: project.summary,
+      url: getSiteUrl() + "/work/" + project.slug,
+      images: ["/images/autumn-cover.webp"],
+    },
   };
 }
 
@@ -34,7 +46,7 @@ export default async function ProjectPage({
   const { slug } = await params;
   const project = getProject(slug);
 
-  if (!project) {
+  if (!project || !project.published) {
     notFound();
   }
 
@@ -44,7 +56,9 @@ export default async function ProjectPage({
         <Link className="text-link" href="/#work">
           ← Back to selected work
         </Link>
-        <span className="eyebrow">{project.number} / {project.category.toUpperCase()}</span>
+        <span className="eyebrow">
+          {project.number} / {project.category.toUpperCase()}
+        </span>
       </div>
 
       <header className="case-header">
@@ -54,7 +68,9 @@ export default async function ProjectPage({
         <h1 data-reveal>
           {project.title}<span className="case-title-period">.</span>
         </h1>
-        <p className="case-summary" data-reveal>{project.summary}</p>
+        <p className="case-summary" data-reveal>
+          {project.summary}
+        </p>
 
         <div className="case-meta-grid" data-reveal>
           <div>
@@ -72,7 +88,7 @@ export default async function ProjectPage({
         </div>
       </header>
 
-      <div className="case-visual" data-hero-art>
+      <div className="case-visual" data-reveal>
         <ProjectVisual project={project} />
       </div>
 

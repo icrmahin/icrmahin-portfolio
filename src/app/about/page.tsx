@@ -1,11 +1,21 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { site } from "@/lib/site";
+import { getSiteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "More about A. Mahin's product-building practice.",
+  description:
+    "More about A. Mahin's approach to product thinking, interface design, and software engineering.",
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About — " + site.name,
+    description: "The person and practice behind icrmahin.",
+    url: getSiteUrl() + "/about",
+    images: ["/images/mahin-portrait.webp"],
+  },
 };
 
 export default function AboutPage() {
@@ -27,13 +37,21 @@ export default function AboutPage() {
             I&apos;m A. Mahin — an independent product builder from Bangladesh.
           </p>
           <p>
-            I work across product thinking, interface design, and software engineering. I like the part where a vague idea becomes a clear problem, a useful interface, and eventually a working product.
+            I work across product thinking, interface design, and software
+            engineering. I like the part where a vague idea becomes a clear
+            problem, a useful interface, and eventually a working product.
           </p>
           <p>
-            My design background makes me attentive to how software feels. Engineering gives me the tools to make those ideas real. I want to own the full process — from the first product decision through implementation and release — while staying honest about what each project actually needs.
+            My design background makes me attentive to how software feels.
+            Engineering gives me the tools to make those ideas real. I want to
+            own the full process — from the first product decision through
+            implementation and release — while staying honest about what each
+            project actually needs.
           </p>
           <p>
-            I value resilience, adaptability, and autonomy. They remind me to keep learning, adjust when the evidence changes, and take responsibility for the result.
+            I value resilience, adaptability, and autonomy. They remind me to
+            keep learning, adjust when the evidence changes, and take
+            responsibility for the result.
           </p>
           <div className="about-page-tags">
             <span>Product thinking</span>
@@ -55,7 +73,7 @@ export default function AboutPage() {
             src="/images/mahin-portrait.webp"
             width={720}
           />
-          <span className="portrait-index">MAHIN / 001</span>
+          <span className="portrait-index">MAHIN / DHAKA</span>
         </div>
       </div>
 
