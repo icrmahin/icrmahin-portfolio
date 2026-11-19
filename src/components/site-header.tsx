@@ -13,8 +13,9 @@ import {
 import { navigation, site } from "@/lib/site";
 
 export function SiteHeader() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [openedOnPath, setOpenedOnPath] = useState<string | null>(null);
   const pathname = usePathname();
+  const menuOpen = openedOnPath === pathname;
   const reduceMotion = useReducedMotion();
   const mobileNavRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -26,23 +27,23 @@ export function SiteHeader() {
   });
 
   useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     if (!menuOpen) return;
 
     mobileNavRef.current?.querySelector<HTMLElement>("a")?.focus();
 
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
-      setMenuOpen(false);
+      setOpenedOnPath(null);
       menuButtonRef.current?.focus();
     };
 
     document.addEventListener("keydown", closeOnEscape);
     return () => document.removeEventListener("keydown", closeOnEscape);
   }, [menuOpen]);
+
+  function toggleMenu() {
+    setOpenedOnPath(menuOpen ? null : pathname);
+  }
 
   function isCurrent(label: string): boolean {
     if (label === "Home") return pathname === "/";
@@ -93,7 +94,7 @@ export function SiteHeader() {
             aria-expanded={menuOpen}
             aria-label={menuOpen ? "Close navigation" : "Open navigation"}
             className="menu-toggle"
-            onClick={() => setMenuOpen((open) => !open)}
+            onClick={toggleMenu}
             ref={menuButtonRef}
             type="button"
           >
@@ -119,13 +120,13 @@ export function SiteHeader() {
                   aria-current={isCurrent(item.label) ? "page" : undefined}
                   href={item.href}
                   key={item.label}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={() => setOpenedOnPath(null)}
                 >
                   {item.label}
                   <span aria-hidden="true">↗</span>
                 </Link>
               ))}
-              <a href={"mailto:" + site.email} onClick={() => setMenuOpen(false)}>
+              <a href={"mailto:" + site.email} onClick={() => setOpenedOnPath(null)}>
                 Contact
                 <span aria-hidden="true">↗</span>
               </a>
