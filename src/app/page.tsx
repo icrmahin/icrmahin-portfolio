@@ -4,24 +4,30 @@ import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/content/projects";
 import { site } from "@/lib/site";
 
-const practiceNotes = [
+const processSteps = [
   {
     number: "01",
-    title: "Product thinking",
-    detail: "Find the real problem before reaching for a solution.",
-    className: "practice-note-yellow",
+    label: "UNDERSTAND",
+    title: "Start with the problem",
+    description:
+      "Clarify who the product is for, what is getting in their way, and what a useful outcome looks like.",
+    tone: "practice-note-yellow",
   },
   {
     number: "02",
-    title: "Interface design",
-    detail: "Make complex things feel clear, calm, and considered.",
-    className: "practice-note-lilac",
+    label: "DESIGN",
+    title: "Make the experience clear",
+    description:
+      "Shape the information, flows, and interface before adding complexity that the product does not need.",
+    tone: "practice-note-lilac",
   },
   {
     number: "03",
-    title: "Engineering",
-    detail: "Turn the design into software that works in the real world.",
-    className: "practice-note-green",
+    label: "ENGINEER",
+    title: "Build for real use",
+    description:
+      "Turn the direction into reliable software, test the details, and keep improving what ships.",
+    tone: "practice-note-green",
   },
 ] as const;
 
@@ -34,33 +40,30 @@ export default function HomePage() {
           <span className="hero-location">{site.location.toUpperCase()}</span>
         </div>
 
-        <div className="hero-stage">
-          <p className="hand-note hero-note-left" data-reveal>well, hello there.</p>
-          <p className="sticker hero-sticker hero-sticker-yellow" data-reveal>DESIGN THE DETAILS</p>
-          <p className="sticker hero-sticker hero-sticker-green" data-reveal>MAKE IT USEFUL</p>
-
+        <div className="hero-stage hero-stage-editorial">
           <div className="hero-center">
             <p className="hero-kicker" data-reveal>
               PRODUCT THINKING <span>/</span> DESIGN <span>/</span> ENGINEERING
             </p>
 
-            <h1 data-reveal>
+            <h1 aria-label="Mahin" data-reveal>
               <span className="hero-name-frame">
                 <span className="hero-name">MAHIN</span>
-                <sup>001</sup>
               </span>
             </h1>
 
             <p className="hero-tagline" data-reveal>
-              I make software that <em>gets out of your way.</em>
+              Ideas into <em>working products.</em>
             </p>
             <p className="hero-summary" data-reveal>
-              I turn ideas and messy workflows into thoughtful digital products — from the first product decision to working software.
+              I move between product thinking, interface design, and software
+              engineering to take an idea from the first decision to a working
+              release.
             </p>
 
             <div className="hero-actions" data-reveal>
               <a className="button button-primary" href="#work">
-                Explore selected work <span aria-hidden="true">↘</span>
+                Selected work <span aria-hidden="true">↘</span>
               </a>
               <Link className="text-link" href="/about">
                 A little about me <span aria-hidden="true">↗</span>
@@ -80,11 +83,13 @@ export default function HomePage() {
                 src="/images/mahin-portrait.webp"
                 width={720}
               />
-              <span className="portrait-index">MAHIN / 001</span>
+              <span className="portrait-index">MAHIN / DHAKA</span>
             </div>
           </div>
 
-          <p className="hand-note hero-note-right" data-reveal>small details. real outcomes.</p>
+          <p className="hand-note hero-note-right" data-reveal>
+            design with intent.
+          </p>
         </div>
 
         <div className="hero-bottomline" data-reveal>
@@ -93,50 +98,71 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section aria-label="Personal visual signature" className="cover-section shell">
-        <div className="cover-image" data-hero-art>
-          <Image
-            alt="Pixel-art autumn horizon created for the icrmahin portfolio"
-            className="cover-art"
-            fill
-            priority
-            sizes="(max-width: 1200px) 100vw, 1160px"
-            src="/images/autumn-cover.webp"
-          />
-          <span className="cover-image-caption">A LITTLE BIT OF MY WORLD / 2026</span>
-        </div>
-        <div className="cover-caption">
-          <span>AN INDEPENDENT PRACTICE</span>
-          <span>IDEAS → INTERFACES → SOFTWARE</span>
-        </div>
-      </section>
-
-      <section className="work-section section shell" id="work">
+      <section
+        aria-labelledby="playground-title"
+        className="playground-section section shell"
+        id="playground"
+      >
         <header className="section-heading" data-reveal>
           <div>
-            <p className="eyebrow">01 / SELECTED WORK</p>
-            <h2>Things I&apos;ve <em>put into motion.</em></h2>
+            <p className="eyebrow">01 / PLAYGROUND</p>
+            <h2 id="playground-title">
+              Just for <em>fun.</em>
+            </h2>
           </div>
           <p className="section-detail">
-            A small selection of products I&apos;ve been shaping, designing, and building.
+            A little visual atmosphere outside the product work.
           </p>
         </header>
 
-        <div className="projects-grid">
-          {projects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
-        </div>
+        <div className="playground-board playground-board-editorial">
+          <div className="playground-image" data-hero-art>
+            <Image
+              alt="Pixel-art autumn landscape made for the icrmahin portfolio"
+              className="playground-pixel"
+              fill
+              priority
+              sizes="(max-width: 760px) 100vw, 680px"
+              src="/images/autumn-cover.webp"
+            />
+            <span className="playground-image-tag">
+              PERSONAL VISUAL / 001
+            </span>
+          </div>
 
-        <p className="work-footnote" data-reveal>
-          No invented metrics or padded case studies. I publish the details that the work can support.
-        </p>
+          <div className="playground-notes" data-reveal>
+            <p className="hand-note">outside the brief.</p>
+            <h3>A little colour, texture, and personality.</h3>
+            <p>
+              Not every part of a creative practice needs to become a product.
+              This is a small space for visual ideas and things I simply enjoy.
+            </p>
+            <a
+              className="text-link"
+              href={site.github}
+              rel="noreferrer"
+              target="_blank"
+            >
+              Find me on GitHub <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <div className="playground-inset" data-reveal>
+            <span className="photo-tape" aria-hidden="true" />
+            <Image
+              alt="Pixel-art portrait against a warm sunset landscape"
+              height={900}
+              sizes="(max-width: 760px) 112px, 150px"
+              src="/images/pixel-portrait.webp"
+              width={900}
+            />
+          </div>
+        </div>
       </section>
 
       <section className="about-section section shell" id="about">
         <div className="about-image-wrap" data-reveal>
           <span className="about-tape about-tape-one" aria-hidden="true" />
-          <span className="about-tape about-tape-two" aria-hidden="true" />
           <Image
             alt="Pixel-art portrait of Mahin against an autumn sky"
             className="about-pixel-art"
@@ -149,16 +175,22 @@ export default function HomePage() {
         </div>
 
         <div className="about-copy">
-          <p className="eyebrow" data-reveal>02 / A LITTLE ABOUT ME</p>
+          <p className="eyebrow" data-reveal>
+            02 / ABOUT
+          </p>
           <h2 data-reveal>
             Design-minded.
             <span className="about-serif">Engineering-focused.</span>
           </h2>
           <p data-reveal>
-            I&apos;m Mahin, an independent product builder from Bangladesh. I work across product thinking, interface design, and software engineering.
+            I&apos;m Mahin, an independent product builder from Bangladesh. I
+            work across product thinking, interface design, and software
+            engineering.
           </p>
           <p data-reveal>
-            I enjoy taking an unclear idea, finding the part that matters, and shaping it into something coherent and useful. I care about the small details, but not at the expense of shipping.
+            I enjoy taking an unclear idea, finding the part that matters, and
+            shaping it into something coherent and useful. I care about the
+            details, but not at the expense of getting the product shipped.
           </p>
           <div className="about-principles" data-reveal>
             <span>Product thinking</span>
@@ -173,84 +205,75 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="work-section section shell" id="work">
+        <header className="section-heading" data-reveal>
+          <div>
+            <p className="eyebrow">03 / CASE STUDIES</p>
+            <h2>
+              Selected <em>work.</em>
+            </h2>
+          </div>
+          <p className="section-detail">
+            A closer look at products I&apos;ve been designing and building.
+          </p>
+        </header>
+
+        <div className="projects-grid">
+          {projects.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
+          ))}
+        </div>
+      </section>
+
       <section className="practice-section section" id="approach">
         <div className="shell">
           <header className="section-heading" data-reveal>
             <div>
-              <p className="eyebrow">03 / HOW I WORK</p>
-              <h2>From first thought to <em>finished work.</em></h2>
+              <p className="eyebrow">04 / HOW I WORK</p>
+              <h2>
+                From first question to <em>finished product.</em>
+              </h2>
             </div>
             <p className="section-detail">
-              A practical loop. Not a ceremony.
+              A practical process that keeps the problem, experience, and
+              implementation connected.
             </p>
           </header>
 
           <div className="practice-board">
-            {practiceNotes.map((note) => (
-              <article className={"practice-note " + note.className} data-reveal key={note.number}>
-                <span className="practice-number">{note.number}</span>
-                <h3>{note.title}</h3>
-                <p>{note.detail}</p>
-                <span className="practice-arrow" aria-hidden="true">↗</span>
+            {processSteps.map((step) => (
+              <article
+                className={"practice-note " + step.tone}
+                data-reveal
+                key={step.number}
+              >
+                <span className="practice-number">
+                  {step.number} / {step.label}
+                </span>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="playground-section section shell" id="playground">
-        <header className="section-heading" data-reveal>
-          <div>
-            <p className="eyebrow">04 / PLAYGROUND</p>
-            <h2>Room to <em>experiment.</em></h2>
-          </div>
-          <p className="section-detail">
-            The side of building that doesn&apos;t always become a project.
-          </p>
-        </header>
-
-        <div className="playground-board">
-          <div className="playground-image" data-reveal>
-            <Image
-              alt="Pixel-art portrait in a warm sunset landscape"
-              className="playground-pixel"
-              fill
-              sizes="(max-width: 760px) 100vw, 540px"
-              src="/images/pixel-portrait.webp"
-            />
-            <span className="playground-image-tag">NOTES FROM THE WORKBENCH</span>
-          </div>
-          <div className="playground-notes">
-            <p className="hand-note">not everything needs a roadmap.</p>
-            <h3>Small tests. Odd ideas. Better details.</h3>
-            <p>
-              I keep space for interface experiments, motion studies, and small tools. The useful ones eventually find their way into the work.
-            </p>
-            <a className="text-link" href={site.github} rel="noreferrer" target="_blank">
-              Find me on GitHub <span aria-hidden="true">↗</span>
-            </a>
-            <span className="playground-sticker">STAY CURIOUS</span>
-          </div>
-        </div>
-      </section>
-
       <section className="contact-section" id="contact">
-        <div className="shell contact-inner">
-          <div className="contact-smiley" aria-hidden="true">
-            <span />
-            <span />
-            <i />
-          </div>
-          <p className="eyebrow" data-reveal>05 / HAVE SOMETHING IN MIND?</p>
+        <div className="shell contact-inner contact-inner-editorial">
+          <p className="eyebrow" data-reveal>
+            05 / CONTACT
+          </p>
           <h2 data-reveal>
-            LET&apos;S TALK<span>.</span>
+            Have a good idea?
+            <span> Let&apos;s build it.</span>
           </h2>
           <div className="contact-bottom" data-reveal>
             <p>
-              Have a product to shape or a problem worth solving? Tell me what you&apos;re working on.
+              Have a product to shape or a problem worth solving? Tell me what
+              you&apos;re working on.
             </p>
             <a className="button button-dark" href={"mailto:" + site.email}>
-              {site.email} <span aria-hidden="true">↗</span>
+              Get in touch <span aria-hidden="true">↗</span>
             </a>
           </div>
         </div>

@@ -5,46 +5,55 @@ export function ProjectVisual({ project }: { project: Project }) {
   if (project.cover === "hibbullah") {
     return (
       <div className="project-visual visual-hibbullah">
-        <div className="visual-topline">
-          <span>PRODUCT / 001</span>
-          <span>2026</span>
+        <div className="project-visual-topline">
+          <span>PROJECT / 001</span>
+          <span>{project.year}</span>
         </div>
-        <span className="visual-cross" aria-hidden="true">+</span>
-        <div className="hibbullah-lockup">
-          <span className="hibbullah-mark">
+
+        <div className="project-brand-lockup">
+          <div className="hibbullah-logo-plate">
             <Image
               alt="Hibbullah logo"
-              fill
-              sizes="(max-width: 680px) 70px, 112px"
+              height={112}
+              sizes="(max-width: 680px) 72px, 112px"
               src="/images/hibbullah-logo.png"
+              width={112}
             />
-          </span>
-          <div>
+          </div>
+          <div className="project-brand-copy">
             <strong>Hibbullah</strong>
-            <small>PHARMACY COMMERCE</small>
+            <span>PHARMACY COMMERCE</span>
           </div>
         </div>
-        <div className="visual-sticker visual-sticker-green">ORDERS / STOCK / SALES</div>
-        <div className="visual-paper-tab">ANDROID APP</div>
-        <span className="visual-index">01 — SELECTED WORK</span>
+
+        <div className="project-visual-bottomline">
+          <span>ANDROID APP</span>
+          <span>CUSTOMER + SHOP OPERATIONS</span>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="project-visual visual-pathways">
-      <div className="visual-topline">
-        <span>PRODUCT / 002</span>
+      <div className="project-visual-topline">
+        <span>PROJECT / 002</span>
         <span>IN DEVELOPMENT</span>
       </div>
-      <div className="pathway-composition">
-        <span className="pathway-orbit pathway-orbit-one" aria-hidden="true" />
-        <span className="pathway-orbit pathway-orbit-two" aria-hidden="true" />
-        <span className="pathway-index">02</span>
-        <strong>Digital<span>Pathways</span></strong>
-        <small>AN EVOLVING PRODUCT PROJECT</small>
+
+      <div className="digitalpathways-lockup">
+        <span className="digitalpathways-index">02</span>
+        <strong>
+          Digital
+          <span>Pathways</span>
+        </strong>
+        <p>AN EVOLVING PRODUCT PROJECT</p>
       </div>
-      <span className="visual-index">02 — CURRENTLY BUILDING</span>
+
+      <div className="project-visual-bottomline">
+        <span>PRODUCT DEVELOPMENT</span>
+        <span>WORK IN PROGRESS</span>
+      </div>
     </div>
   );
 }
