@@ -1,14 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import {
-  Bebas_Neue,
-  Caveat,
-  DM_Mono,
-  Instrument_Serif,
-  Manrope,
-} from "next/font/google";
+import { Instrument_Serif, Manrope } from "next/font/google";
 import type { ReactNode } from "react";
-import { LenisProvider } from "@/components/lenis-provider";
-import { ScrollEffects } from "@/components/scroll-effects";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getSiteUrl, site } from "@/lib/site";
@@ -25,29 +17,6 @@ const serif = Instrument_Serif({
   variable: "--font-serif",
   weight: "400",
   display: "swap",
-});
-
-const mono = DM_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "500"],
-  display: "swap",
-  preload: false,
-});
-
-const display = Bebas_Neue({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: "400",
-  display: "swap",
-});
-
-const handwriting = Caveat({
-  subsets: ["latin"],
-  variable: "--font-hand",
-  weight: "400",
-  display: "swap",
-  preload: false,
 });
 
 const siteUrl = getSiteUrl();
@@ -140,29 +109,18 @@ function StructuredData() {
 export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
-  const fontVariables = [
-    sans.variable,
-    serif.variable,
-    mono.variable,
-    display.variable,
-    handwriting.variable,
-  ].join(" ");
-
   return (
-    <html lang="en" className={fontVariables}>
+    <html lang="en" className={sans.variable + " " + serif.variable}>
       <body>
         <StructuredData />
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
-        <LenisProvider>
-          <SiteHeader />
-          <main className="w-full" id="main-content">
-            {children}
-          </main>
-          <SiteFooter />
-          <ScrollEffects />
-        </LenisProvider>
+        <SiteHeader />
+        <main className="w-full" id="main-content">
+          {children}
+        </main>
+        <SiteFooter />
       </body>
     </html>
   );

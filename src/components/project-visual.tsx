@@ -5,55 +5,29 @@ export function ProjectVisual({ project }: { project: Project }) {
   if (project.cover === "hibbullah") {
     return (
       <div className="project-visual visual-hibbullah">
-        <div className="project-visual-topline">
-          <span>PROJECT / 001</span>
-          <span>{project.year}</span>
+        <div className="hibbullah-mark">
+          <Image
+            alt="Hibbullah logo"
+            height={112}
+            sizes="88px"
+            src="/images/hibbullah-logo.png"
+            width={112}
+          />
         </div>
-
-        <div className="project-brand-lockup">
-          <div className="hibbullah-logo-plate">
-            <Image
-              alt="Hibbullah logo"
-              height={112}
-              sizes="(max-width: 680px) 72px, 112px"
-              src="/images/hibbullah-logo.png"
-              width={112}
-            />
-          </div>
-          <div className="project-brand-copy">
-            <strong>Hibbullah</strong>
-            <span>PHARMACY COMMERCE</span>
-          </div>
-        </div>
-
-        <div className="project-visual-bottomline">
-          <span>ANDROID APP</span>
-          <span>CUSTOMER + SHOP OPERATIONS</span>
-        </div>
+        <p>One pharmacy. Two connected experiences.</p>
       </div>
     );
   }
 
   return (
     <div className="project-visual visual-pathways">
-      <div className="project-visual-topline">
-        <span>PROJECT / 002</span>
-        <span>IN DEVELOPMENT</span>
+      <div className="pathways-mark" aria-hidden="true">
+        <span />
+        <span />
+        <span />
       </div>
-
-      <div className="digitalpathways-lockup">
-        <span className="digitalpathways-index">02</span>
-        <strong>
-          Digital
-          <span>Pathways</span>
-        </strong>
-        <p>AN EVOLVING PRODUCT PROJECT</p>
-      </div>
-
-      <div className="project-visual-bottomline">
-        <span>PRODUCT DEVELOPMENT</span>
-        <span>WORK IN PROGRESS</span>
-      </div>
+      <div className="pathways-name">DigitalPathways</div>
+      <p>In development</p>
     </div>
   );
 }

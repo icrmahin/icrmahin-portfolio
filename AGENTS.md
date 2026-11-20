@@ -23,7 +23,8 @@ Build and maintain the personal portfolio for A. Mahin. The site should feel edi
 6. Keep browser APIs inside Client Components or effects.
 7. Keep images local, optimized, and appropriately labeled.
 8. Do not add a backend, authentication, database, or CMS without a demonstrated content need.
-9. Keep animation libraries non-overlapping: GSAP for choreography, Motion for interface state, Lenis for scrolling.
+9. Remove decorative counters, meaningless sequence numbers, micro-labels, and status ornaments. Every visible label must help someone understand the work or navigate the site.
+10. Native browser scrolling is the default. Do not add Lenis, GSAP, Motion, scroll reveals, parallax, or entrance choreography to the site. Use small CSS transitions only when they clarify an interaction; preserve a complete static reading experience and respect reduced motion.
 
 ## Before finishing a change
 

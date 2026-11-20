@@ -3,64 +3,41 @@ import type { Project } from "@/content/projects";
 import { ProjectVisual } from "@/components/project-visual";
 
 export function ProjectCard({ project }: { project: Project }) {
-  const cardContent = (
+  const content = (
     <>
       <ProjectVisual project={project} />
-
       <div className="project-card-copy">
-        <div className="project-card-meta">
-          <span className="project-number">
-            {project.number} / {project.category}
-          </span>
-          <span
-            className={
-              project.published
-                ? "status-label status-published"
-                : "status-label status-pending"
-            }
-          >
-            <i aria-hidden="true" />
-            {project.status}
-          </span>
-        </div>
-
+        <p className="project-category">{project.category}</p>
         <div className="project-card-title-row">
           <h3>{project.title}</h3>
           {project.published ? (
-            <span aria-hidden="true" className="project-arrow">
-              ↗
-            </span>
-          ) : null}
+            <span aria-hidden="true" className="project-arrow">↗</span>
+          ) : (
+            <span className="project-status">In progress</span>
+          )}
         </div>
-
-        <p>{project.summary}</p>
-
+        <p className="project-summary">{project.summary}</p>
         {project.published ? (
           <span className="project-read-link">
             Read the case study <span aria-hidden="true">↗</span>
           </span>
-        ) : (
-          <span className="project-progress">Details coming when ready</span>
-        )}
+        ) : null}
       </div>
     </>
   );
 
   return (
-    <article
-      className={"project-card project-card-" + project.cover}
-      data-project-card
-    >
+    <article className={"project-card project-card-" + project.cover}>
       {project.published ? (
         <Link
           aria-label={"Read the " + project.title + " case study"}
           className="project-card-link"
           href={"/work/" + project.slug}
         >
-          {cardContent}
+          {content}
         </Link>
       ) : (
-        <div className="project-card-static">{cardContent}</div>
+        <div className="project-card-static">{content}</div>
       )}
     </article>
   );

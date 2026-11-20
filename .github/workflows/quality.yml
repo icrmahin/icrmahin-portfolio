@@ -41,5 +41,8 @@ jobs:
       - name: Build production application
         run: pnpm build
 
+      - name: Check responsive layout contract
+        run: pnpm responsive
+
       - name: Smoke-test production routes
         run: pnpm smoke
