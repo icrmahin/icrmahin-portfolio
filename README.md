@@ -2,7 +2,7 @@
 
 A personal portfolio for **A. Mahin** — an independent product builder working across product thinking, interface design, and software engineering.
 
-The visual system combines ruled notebook paper, compact utility navigation, expressive display type, handwritten notes, taped photography, and restrained pastel accents. It is an editorial portfolio, not a developer-terminal gimmick or a game.
+The visual system is an editorial, compact portfolio: warm neutral surfaces, readable typography, a restrained coral accent, strong image composition, and clear case-study storytelling. It is not a scrapbook, a developer-terminal gimmick, or a game.
 
 ## Stack
 
@@ -59,7 +59,7 @@ src/
 │   ├── about/                 # About page
 │   ├── work/[slug]/           # Published case studies
 │   ├── globals.css            # Design system and responsive rules
-│   ├── layout.tsx             # Fonts, metadata, structured data, providers
+│   ├── layout.tsx             # Fonts, metadata and structured data
 │   ├── page.tsx               # Homepage composition
 │   ├── robots.ts              # Crawler rules
 │   └── sitemap.ts             # Published routes only
@@ -85,7 +85,11 @@ scripts/
 └── smoke-test.mjs
 ```
 
-## Design system\n\nThe compact responsive layout, typography, spacing, case-study structure, and motion rules are documented in [docs/UI-SYSTEM.md](./docs/UI-SYSTEM.md). The case-study publishing requirements live in [docs/CONTENT.md](./docs/CONTENT.md).\n\n## Content editing
+## Design system
+
+The compact responsive layout, typography, spacing, case-study structure, and motion rules are documented in [docs/UI-SYSTEM.md](./docs/UI-SYSTEM.md). The case-study publishing requirements live in [docs/CONTENT.md](./docs/CONTENT.md).
+
+## Content editing
 
 ### Site identity
 
@@ -101,9 +105,9 @@ Edit `src/content/projects.ts`. The `slug` controls the `/work/[slug]` URL.
 
 ### Project imagery
 
-- The profile portrait and pixel-art illustrations are previously generated portfolio assets.
+- The profile portrait is a personal portfolio asset.
 - The Hibbullah mark comes from the Hibbullah application repository.
-- Project cover compositions are editorial artwork, not screenshots of shipped software.
+- The Hibbullah case-study architecture diagram explains the system; it is not a captured product screen.
 
 Use actual product captures when they are approved and available. Never present illustrative artwork as a live product screen.
 
