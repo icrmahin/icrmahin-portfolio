@@ -33,7 +33,7 @@ export async function generateMetadata({
       title: project.title + " — " + site.name,
       description: project.summary,
       url: getSiteUrl() + "/work/" + project.slug,
-      images: ["/images/autumn-cover.webp"],
+      images: ["/images/hibbullah-logo.png"],
     },
   };
 }
@@ -52,89 +52,170 @@ export default async function ProjectPage({
 
   return (
     <article className="case-study shell">
-      <div className="case-back-row">
-        <Link className="text-link" href="/#work">
-          ← Back to selected work
-        </Link>
-        <span className="eyebrow">
-          {project.number} / {project.category.toUpperCase()}
-        </span>
-      </div>
+      <Link className="case-back" href="/#work">
+        <span aria-hidden="true">←</span> Selected work
+      </Link>
 
-      <header className="case-header">
-        <p className="eyebrow" data-reveal>
-          {project.status.toUpperCase()} <span>·</span> {project.year}
-        </p>
-        <h1 data-reveal>
-          {project.title}<span className="case-title-period">.</span>
-        </h1>
-        <p className="case-summary" data-reveal>
-          {project.summary}
-        </p>
-
-        <div className="case-meta-grid" data-reveal>
-          <div>
-            <span>MY ROLE</span>
-            <p>{project.role}</p>
+      <header className="case-intro">
+        <div className="case-intro-copy">
+          <p className="case-kicker">Case study <span>·</span> {project.category}</p>
+          <h1>{project.title}</h1>
+          <p className="case-lede">{project.summary}</p>
+          <div className="case-actions">
+            <a className="button button-primary" href={"mailto:" + site.email}>
+              Discuss a similar product
+            </a>
           </div>
-          <div>
-            <span>TECHNOLOGY</span>
-            <p>{project.stack.join(" · ")}</p>
-          </div>
-          <div>
-            <span>STATUS</span>
-            <p>{project.status}</p>
-          </div>
+        </div>
+        <div className="case-intro-visual">
+          <ProjectVisual project={project} />
         </div>
       </header>
 
-      <div className="case-visual" data-reveal>
-        <ProjectVisual project={project} />
-      </div>
+      <dl className="case-facts">
+        <div>
+          <dt>My role</dt>
+          <dd>{project.role}</dd>
+        </div>
+        <div>
+          <dt>Platform</dt>
+          <dd>{project.platform}</dd>
+        </div>
+        <div>
+          <dt>Built with</dt>
+          <dd>{project.stack.join(" · ")}</dd>
+        </div>
+      </dl>
 
-      <div className="case-content">
-        <section data-reveal>
-          <p className="eyebrow">01 / OVERVIEW</p>
-          <h2>What it is</h2>
-          <p>{project.overview}</p>
-        </section>
+      <section className="case-section case-brief">
+        <div className="case-section-heading">
+          <h2>The brief</h2>
+          <p>What the product needed to do</p>
+        </div>
+        <div className="case-section-body">
+          <p className="case-body-lead">{project.brief}</p>
+          <h3>Constraints that shaped the product</h3>
+          <ul className="case-constraint-list">
+            {project.constraints.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+        </div>
+      </section>
 
-        <section data-reveal>
-          <p className="eyebrow">02 / THE PROBLEM SPACE</p>
-          <h2>What needed attention</h2>
-          <p>{project.challenge}</p>
-        </section>
+      <section className="case-section">
+        <div className="case-section-heading">
+          <h2>Two connected experiences</h2>
+          <p>One source of truth, two very different jobs</p>
+        </div>
+        <div className="case-section-body">
+          <div className="case-surface-grid">
+            {project.surfaces.map((surface) => (
+              <section className="case-surface" key={surface.title}>
+                <p className="case-surface-audience">{surface.audience}</p>
+                <h3>{surface.title}</h3>
+                <p>{surface.description}</p>
+                <ul>
+                  {surface.capabilities.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              </section>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        <section data-reveal>
-          <p className="eyebrow">03 / APPROACH</p>
-          <h2>How I approached it</h2>
-          <div className="case-approach-list">
-            {project.approach.map((item, index) => (
-              <article key={item.title}>
-                <span>0{index + 1}</span>
+      <section className="case-section">
+        <div className="case-section-heading">
+          <h2>From discovery to fulfilment</h2>
+          <p>The customer and operational journey</p>
+        </div>
+        <div className="case-section-body">
+          <ol className="case-journey">
+            {project.journey.map((step) => (
+              <li key={step.title}>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="case-section">
+        <div className="case-section-heading">
+          <h2>The system behind it</h2>
+          <p>How the application and services fit together</p>
+        </div>
+        <div className="case-section-body">
+          <div className="case-architecture" aria-label="Hibbullah technical architecture">
+            <div className="architecture-clients">
+              {project.architecture.slice(0, 2).map((node) => (
+                <div className="architecture-node architecture-node-client" key={node.title}>
+                  <h3>{node.title}</h3>
+                  <p>{node.description}</p>
+                </div>
+              ))}
+            </div>
+            <div className="architecture-connector">
+              <span>Typed requests and service calls</span>
+            </div>
+            <div className="architecture-node architecture-node-core">
+              <h3>{project.architecture[2].title}</h3>
+              <p>{project.architecture[2].description}</p>
+            </div>
+            <div className="architecture-connector">
+              <span>Media kept separate from business data</span>
+            </div>
+            <div className="architecture-node architecture-node-media">
+              <h3>{project.architecture[3].title}</h3>
+              <p>{project.architecture[3].description}</p>
+            </div>
+          </div>
+          <p className="case-diagram-note">
+            This is a system map, not a screenshot of the product UI.
+          </p>
+        </div>
+      </section>
+
+      <section className="case-section">
+        <div className="case-section-heading">
+          <h2>Engineering decisions</h2>
+          <p>The choices that protect the experience and the business data</p>
+        </div>
+        <div className="case-section-body">
+          <div className="case-decision-list">
+            {project.decisions.map((decision) => (
+              <article className="case-decision" key={decision.title}>
+                <h3>{decision.title}</h3>
                 <div>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
+                  <p><strong>The problem</strong>{decision.context}</p>
+                  <p><strong>The implementation</strong>{decision.implementation}</p>
                 </div>
               </article>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section data-reveal>
-          <p className="eyebrow">04 / SCOPE</p>
-          <h2>What is in the product</h2>
-          <ul className="case-outcomes">
-            {project.outcomes.map((outcome) => (
-              <li key={outcome}>{outcome}</li>
-            ))}
+      <section className="case-section">
+        <div className="case-section-heading">
+          <h2>What was delivered</h2>
+          <p>The implemented scope</p>
+        </div>
+        <div className="case-section-body">
+          <ul className="case-delivered-list">
+            {project.delivered.map((item) => <li key={item}>{item}</li>)}
           </ul>
-        </section>
-      </div>
+          <p className="case-current-state">{project.currentState}</p>
+        </div>
+      </section>
 
-      <div className="case-end" data-reveal>
-        <span className="eyebrow">NEXT</span>
-        <Link href="/#contact">Have a good problem? Let&apos;s talk ↗</Link>
+      <div className="case-end">
+        <div>
+          <h2>Need a product built with this level of care?</h2>
+          <p>Tell me about the people, the problem, and the constraints.</p>
+        </div>
+        <a className="button button-primary" href={"mailto:" + site.email}>
+          Start a conversation <span aria-hidden="true">↗</span>
+        </a>
       </div>
     </article>
   );
