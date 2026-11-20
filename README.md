@@ -85,7 +85,7 @@ scripts/
 └── smoke-test.mjs
 ```
 
-## Content editing
+## Design system\n\nThe compact responsive layout, typography, spacing, case-study structure, and motion rules are documented in [docs/UI-SYSTEM.md](./docs/UI-SYSTEM.md). The case-study publishing requirements live in [docs/CONTENT.md](./docs/CONTENT.md).\n\n## Content editing
 
 ### Site identity
 
