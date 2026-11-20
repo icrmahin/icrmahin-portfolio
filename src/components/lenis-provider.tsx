@@ -1,28 +1,50 @@
 "use client";
 
 import { useEffect, type ReactNode } from "react";
-import Lenis from "lenis";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
+type LenisInstance = {
+  raf: (time: number) => void;
+  destroy: () => void;
+  on: (event: "scroll", callback: () => void) => void;
+};
 
 export function LenisProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    );
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const desktop = window.matchMedia("(min-width: 900px)");
 
-    let lenis: Lenis | null = null;
+    let lenis: LenisInstance | null = null;
+    let removeTicker: (() => void) | null = null;
+    let timer: number | null = null;
+    let cancelled = false;
 
-    const update = (time: number) => {
-      lenis?.raf(time * 1000);
+    const stop = () => {
+      removeTicker?.();
+      removeTicker = null;
+      lenis?.destroy();
+      lenis = null;
     };
 
-    const start = () => {
-      if (lenis) return;
+    const start = async () => {
+      if (cancelled || reducedMotion.matches || !desktop.matches || lenis) {
+        return;
+      }
 
-      lenis = new Lenis({
+      const [lenisModule, gsapModule, scrollTriggerModule] = await Promise.all([
+        import("lenis"),
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+
+      if (cancelled || reducedMotion.matches || !desktop.matches || lenis) {
+        return;
+      }
+
+      const gsap = gsapModule.gsap;
+      const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
+
+      const instance = new lenisModule.default({
         autoRaf: false,
         lerp: 0.09,
         smoothWheel: true,
@@ -30,32 +52,51 @@ export function LenisProvider({ children }: { children: ReactNode }) {
         syncTouch: false,
       });
 
-      lenis.on("scroll", ScrollTrigger.update);
+      lenis = instance;
+      instance.on("scroll", ScrollTrigger.update);
+
+      const update = (time: number) => {
+        instance.raf(time * 1000);
+      };
+
       gsap.ticker.add(update);
+      removeTicker = () => gsap.ticker.remove(update);
     };
 
-    const stop = () => {
-      if (!lenis) return;
-
-      gsap.ticker.remove(update);
-      lenis.destroy();
-      lenis = null;
-    };
-
-    if (!reducedMotion.matches) start();
-
-    const handleMotionPreference = (event: MediaQueryListEvent) => {
-      if (event.matches) {
-        stop();
-      } else {
-        start();
+    const schedule = () => {
+      if (cancelled || reducedMotion.matches || !desktop.matches || lenis || timer !== null) {
+        return;
       }
+
+      // Let the first paint and primary interaction finish before loading scroll extras.
+      timer = window.setTimeout(() => {
+        timer = null;
+        void start();
+      }, 350);
     };
 
-    reducedMotion.addEventListener("change", handleMotionPreference);
+    const syncPreferences = () => {
+      if (reducedMotion.matches || !desktop.matches) {
+        stop();
+        if (timer !== null) {
+          window.clearTimeout(timer);
+          timer = null;
+        }
+        return;
+      }
+
+      schedule();
+    };
+
+    reducedMotion.addEventListener("change", syncPreferences);
+    desktop.addEventListener("change", syncPreferences);
+    schedule();
 
     return () => {
-      reducedMotion.removeEventListener("change", handleMotionPreference);
+      cancelled = true;
+      reducedMotion.removeEventListener("change", syncPreferences);
+      desktop.removeEventListener("change", syncPreferences);
+      if (timer !== null) window.clearTimeout(timer);
       stop();
     };
   }, []);

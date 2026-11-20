@@ -32,6 +32,7 @@ const mono = DM_Mono({
   variable: "--font-mono",
   weight: ["400", "500"],
   display: "swap",
+  preload: false,
 });
 
 const display = Bebas_Neue({
@@ -46,6 +47,7 @@ const handwriting = Caveat({
   variable: "--font-hand",
   weight: "400",
   display: "swap",
+  preload: false,
 });
 
 const siteUrl = getSiteUrl();
