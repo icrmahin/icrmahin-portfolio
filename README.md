@@ -11,15 +11,13 @@ The visual system combines ruled notebook paper, compact utility navigation, exp
 | Framework | Next.js 16 App Router |
 | UI | React 19 + TypeScript 5 |
 | Styling | Tailwind CSS 4 + custom CSS |
-| Scroll choreography | GSAP 3 + ScrollTrigger |
-| Interface motion | Motion |
-| Smooth scrolling | Lenis |
-| Typography | Manrope, Instrument Serif, DM Mono, Bebas Neue, Caveat |
+| Typography | Manrope + Instrument Serif |
+| Motion | Native browser scrolling + small CSS interaction states |
 | Images | Next.js Image + local WebP / PNG assets |
 | Package manager | pnpm 12 |
 | Hosting | Vercel |
 
-GSAP owns page choreography and scroll-linked effects. Motion owns compact interface state and the reading-progress indicator. Lenis owns wheel-scroll interpolation. Anime.js is intentionally not included because it would duplicate responsibilities already covered by this stack.
+The portfolio uses native browser scrolling. There is no global smooth-scroll override, scroll-triggered reveal system, parallax layer, or animation sequence that hides essential content. The visual system is intentionally small: two type families, one compact spacing scale, a warm neutral palette, and a single accent.
 
 ## Requirements
 
@@ -66,12 +64,10 @@ src/
 │   ├── robots.ts              # Crawler rules
 │   └── sitemap.ts             # Published routes only
 ├── components/
-│   ├── lenis-provider.tsx     # Lenis + GSAP ticker integration
 │   ├── project-card.tsx       # Published and in-progress project cards
 │   ├── project-visual.tsx     # Editorial project artwork
-│   ├── scroll-effects.tsx     # GSAP intro and ScrollTrigger choreography
 │   ├── site-footer.tsx
-│   └── site-header.tsx        # Responsive nav and scroll progress
+│   └── site-header.tsx        # Responsive keyboard-operable navigation
 ├── content/
 │   └── projects.ts            # Typed project and case-study content
 └── lib/
@@ -111,16 +107,17 @@ Edit `src/content/projects.ts`. The `slug` controls the `/work/[slug]` URL.
 
 Use actual product captures when they are approved and available. Never present illustrative artwork as a live product screen.
 
-## Motion and accessibility
+## Layout, motion, and accessibility
 
-- GSAP handles the opening sequence, section reveals, project-card choreography, and restrained desktop parallax.
-- Motion handles navigation state and the reading-progress indicator.
-- Lenis provides restrained wheel-scroll interpolation, synchronized to the GSAP ticker.
-- All motion choreography respects `prefers-reduced-motion`; reduced-motion users get native scrolling and static content.
-- Core content remains readable without JavaScript.
-- Navigation supports keyboard dismissal with Escape, visible focus states, and semantic landmarks.
+The detailed design rules are documented in [docs/UI-SYSTEM.md](./docs/UI-SYSTEM.md).
 
-Avoid adding another animation engine for overlapping responsibilities. Motion should support the content rather than compete with it.
+- Layout is mobile-first. Images and content remain in normal document flow; columns collapse to one column when the viewport narrows.
+- The page is designed to reflow at 320 CSS pixels without horizontal scrolling.
+- Body text stays readable and long-form content is kept to a comfortable measure.
+- Native browser scrolling is used. Essential content is never hidden behind an animation.
+- Focus styles, semantic landmarks, descriptive image text, and keyboard-operable navigation are required.
+- Reduced-motion preferences are respected.
+- The case study distinguishes system diagrams from actual product screenshots. Illustrative artwork is never labelled as shipped UI.
 
 ## Environment and canonical URLs
 
