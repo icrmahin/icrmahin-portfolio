@@ -22,13 +22,11 @@ export default function AboutPage() {
   return (
     <article className="about-page shell">
       <div className="about-page-topline">
-        <p className="eyebrow">ABOUT / THE PERSON BEHIND THE WORK</p>
-        <span className="hand-note">a few words about me.</span>
+        <p>About Mahin</p>
       </div>
 
       <div className="about-page-grid">
         <div className="about-page-copy">
-          <p className="sticker sticker-yellow">A. MAHIN / DHAKA</p>
           <h1>
             Curious by nature.
             <span className="about-serif">Product-minded by practice.</span>
@@ -38,23 +36,22 @@ export default function AboutPage() {
           </p>
           <p>
             I work across product thinking, interface design, and software
-            engineering. I like the part where a vague idea becomes a clear
-            problem, a useful interface, and eventually a working product.
+            engineering. I enjoy taking an unclear idea, finding the problem
+            worth solving, and shaping it into a product with a clear purpose.
           </p>
           <p>
-            My design background makes me attentive to how software feels.
-            Engineering gives me the tools to make those ideas real. I want to
-            own the full process — from the first product decision through
-            implementation and release — while staying honest about what each
-            project actually needs.
+            My design background makes me attentive to how software feels and
+            how people move through it. Engineering gives me the tools to make
+            those decisions real, connect the interface to dependable systems,
+            and take responsibility for what ships.
           </p>
           <p>
-            I value resilience, adaptability, and autonomy. They remind me to
-            keep learning, adjust when the evidence changes, and take
-            responsibility for the result.
+            I value resilience, adaptability, and autonomy. They help me keep
+            learning, change direction when evidence calls for it, and stay
+            accountable for the result.
           </p>
-          <div className="about-page-tags">
-            <span>Product thinking</span>
+          <div className="about-page-tags" aria-label="Areas of work">
+            <span>Product direction</span>
             <span>Interface design</span>
             <span>Frontend engineering</span>
             <span>Mobile products</span>
@@ -64,17 +61,16 @@ export default function AboutPage() {
           </a>
         </div>
 
-        <div className="about-page-photo" data-reveal>
-          <span className="photo-tape" aria-hidden="true" />
+        <figure className="about-page-photo">
           <Image
             alt="Portrait of A. Mahin wearing clear glasses"
             height={864}
-            sizes="(max-width: 760px) 86vw, 430px"
+            sizes="(max-width: 760px) 250px, 320px"
             src="/images/mahin-portrait.webp"
             width={720}
           />
-          <span className="portrait-index">MAHIN / DHAKA</span>
-        </div>
+          <figcaption>A. Mahin · Dhaka, Bangladesh</figcaption>
+        </figure>
       </div>
 
       <Link className="text-link about-page-back" href="/">
