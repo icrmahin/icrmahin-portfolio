@@ -14,10 +14,20 @@ export function getSiteUrl(): string {
   const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   const productionDomain = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
   const deploymentDomain = process.env.VERCEL_URL?.trim();
+  // Netlify exposes the site's primary URL (custom domain if set) as URL.
+  const netlifyUrl = process.env.URL?.trim();
 
   if (configuredUrl) {
     try {
       return new URL(configuredUrl).origin;
+    } catch {
+      // Fall through to host-provided domains.
+    }
+  }
+
+  if (netlifyUrl) {
+    try {
+      return new URL(netlifyUrl).origin;
     } catch {
       // Fall through to Vercel's deployment-provided domains.
     }
