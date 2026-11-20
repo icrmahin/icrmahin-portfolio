@@ -3,7 +3,7 @@ import process from "node:process";
 
 const port = Number(process.env.SMOKE_PORT ?? 3187);
 const host = "127.0.0.1";
-const origin = \`http://\${host}:\${port}\`;
+const origin = "http://" + host + ":" + port;
 
 const server = spawn(
   "pnpm",
@@ -22,7 +22,7 @@ async function waitForServer() {
 
   while (Date.now() < deadline) {
     if (server.exitCode !== null) {
-      throw new Error(\`Next.js server exited with code \${server.exitCode}\`);
+      throw new Error("Next.js server exited with code " + server.exitCode);
     }
 
     try {
@@ -44,15 +44,15 @@ async function assertRoute(path, expectedStatus, expectedText) {
 
   if (response.status !== expectedStatus) {
     throw new Error(
-      \`\${path}: expected HTTP \${expectedStatus}, received \${response.status}\`,
+      path + ": expected HTTP " + expectedStatus + ", received " + response.status,
     );
   }
 
   if (expectedText && !body.includes(expectedText)) {
-    throw new Error(\`\${path}: response did not include "\${expectedText}"\`);
+    throw new Error(path + ': response did not include "' + expectedText + '"');
   }
 
-  process.stdout.write(\`✓ \${response.status} \${path}\\n\`);
+  process.stdout.write("✓ " + response.status + " " + path + "\n");
 }
 
 try {
@@ -68,7 +68,7 @@ try {
   await assertRoute("/sitemap.xml", 200, "/work/hibbullah");
   await assertRoute("/icons/icon.svg", 200, "<svg");
 
-  process.stdout.write("\\nProduction route smoke tests passed.\\n");
+  process.stdout.write("\nProduction route smoke tests passed.\n");
 } finally {
   server.kill("SIGTERM");
 }
